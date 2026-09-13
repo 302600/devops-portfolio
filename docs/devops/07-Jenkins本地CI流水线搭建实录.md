@@ -103,9 +103,11 @@ pipeline {
 
 | 截图 | 说明 |
 | --- | --- |
-| Git 轮询日志 | 显示 `Changes found`，构建 #6 由轮询自动触发（非手动） |
-| 构建历史 | 手动构建 #1-#5 + 自动触发 #6，绿色成功 |
-| 应用页面 | `http://192.168.121.101:8090` 显示 "Demo App v2 - Jenkins 流水线部署成功"，证明提交后自动部署生效 |
+| ![构建历史](../../screenshots/09_Jenkins构建历史_自动触发.png) | 构建历史：手动构建 #1-#5 + 轮询自动触发 #6（显示 "1 commit"），全部成功 |
+| ![轮询日志](../../screenshots/10_Git轮询日志_ChangesFound.png) | Git 轮询日志显示 `Changes found`，证明 #6 由轮询自动触发（非手动） |
+| ![应用页面](../../screenshots/11_demo应用页面_v2.png) | `http://192.168.121.101:8090` 显示 "Demo App v2 - Jenkins 流水线部署成功"，提交后自动部署生效 |
+| ![提交记录](../../screenshots/12_Gitea提交记录.png) | Gitea 仓库提交记录：v1 → v2 的 commit 历史 |
+| ![阶段视图](../../screenshots/13_Pipeline阶段视图.png) | Pipeline 阶段视图：拉取代码 → 构建镜像 → 部署 三阶段全绿 |
 
 ## 七、面试讲解要点
 
