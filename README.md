@@ -5,7 +5,11 @@
 ## 项目一：云原生 DevOps 一体化交付平台
 
 K8s + Calico + Harbor + Gitea + Jenkins + ArgoCD + Helm 完整 GitOps 链路。
-集群为按量付费服务器搭建（已释放），以下为搭建时的真实截图与完整文档。
+
+- 第一阶段（2026-08，阿里云 ECS 按量付费，已释放）：单节点 K8s 集群 + Harbor/Gitea/Jenkins/ArgoCD 全家桶，GitOps CD 闭环，CI 构建为手动验证
+- 第二阶段（2026-09，本地 VM）：Gitea + Jenkins 重建 CI 环节，Jenkinsfile + Poll SCM 实现提交代码后自动构建、自动部署，CI 闭环
+
+以下为搭建时的真实截图与完整文档。
 
 ### 运行证据截图
 
@@ -22,13 +26,10 @@ K8s + Calico + Harbor + Gitea + Jenkins + ArgoCD + Helm 完整 GitOps 链路。
 
 ### 文档
 
-- [搭建实录](docs/devops/01-搭建实录.md)
-- [复盘讲解与自测](docs/devops/02-复盘讲解与自测.md)
-- [项目完全掌握手册](docs/devops/03-项目完全掌握手册.md)
-- [技术教程](docs/devops/04-技术教程.md)
-- [防问倒手册](docs/devops/05-防问倒手册.md)
-- [质疑点应对](docs/devops/06-质疑点应对.md)
-- [Jenkins 本地 CI 流水线搭建实录](docs/devops/07-Jenkins本地CI流水线搭建实录.md)（服务器释放后在本地 VM 重建 CI 闭环：提交代码 → 自动构建 → 自动部署）
+- [01-搭建实录](docs/devops/01-搭建实录.md)：从零到一的完整过程记录，含 18 条踩坑和知识点整理
+- [02-架构与流水线说明](docs/devops/02-架构与流水线说明.md)：组件选型理由、一次发布的完整数据流、CI 两次实现对比
+- [03-踩坑与排障记录](docs/devops/03-踩坑与排障记录.md)：两次搭建（云端集群 + 本地 VM）的 19 个实质性问题与排障方法论
+- [04-Jenkins 本地 CI 流水线搭建实录](docs/devops/04-Jenkins本地CI流水线搭建实录.md)：服务器释放后在本地 VM 重建 CI 闭环，提交代码 → 自动构建 → 自动部署
 
 ## 项目二：企业级 Web 应用架构与安全防护（雷池 WAF）
 
