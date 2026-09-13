@@ -36,8 +36,3 @@ K8s + Calico + Harbor + Gitea + Jenkins + ArgoCD + Helm 完整 GitOps 链路。
 阿里云 ECS + 雷池 WAF + Nginx + Docker，含高可用验证与排障记录。
 
 - [实操记录与原理笔记](docs/waf/01-实操记录与原理笔记.md)
-- [雷池 WAF 部署教程](docs/waf/02-雷池WAF部署教程.md)
-
-## 学习笔记
-
-Docker / K8s / Nginx / MySQL / Redis 系统学习文档见 [docs/notes/](docs/notes/)。

@@ -1,7 +1,7 @@
 # Jenkins 本地 CI 流水线搭建实录（Gitea + Jenkins + Docker）
 
 > 记录人：陈世豪　｜　记录日期：2026-09-13
-> 用途：补齐项目一（DevOps 交付平台）中"Jenkins 流水线"环节，记录全过程与踩坑，供面试讲解。
+> 用途：补齐项目一（DevOps 交付平台）中"Jenkins 流水线"环节，记录全过程与踩坑。
 
 ---
 
@@ -83,7 +83,7 @@ pipeline {
 - `${BUILD_NUMBER}`：Jenkins 内置变量，用构建号做镜像 tag，每次构建的镜像可追溯、不冲突。
 - `docker rm -f ... || true`：先删旧容器再部署，`|| true` 保证第一次构建（容器还不存在）时不报错。
 
-## 五、踩坑记录（重点，面试排障素材）
+## 五、踩坑记录
 
 | 坑 | 现象 | 排查与解决 |
 | --- | --- | --- |
@@ -109,7 +109,7 @@ pipeline {
 | ![提交记录](../../screenshots/12_Gitea提交记录.png) | Gitea 仓库提交记录：v1 → v2 的 commit 历史 |
 | ![阶段视图](../../screenshots/13_Pipeline阶段视图.png) | Pipeline 阶段视图：拉取代码 → 构建镜像 → 部署 三阶段全绿 |
 
-## 七、面试讲解要点
+## 七、设计取舍与原理
 
 - **为什么用轮询 SCM 而不是 Webhook**：Gitea Webhook 需要 Jenkins 装 Generic Webhook Trigger 插件并互配，轮询是 Jenkins 自带能力、零插件依赖，学习环境最省事；生产上 Webhook 实时性更好（秒级触发），轮询有分钟级延迟，两者都懂、按场景选。
 - **流水线三阶段的对应关系**：拉代码（checkout scm）→ 构建（docker build）→ 部署（docker run），项目一里的完整链路是 Jenkins 构建后推 Harbor、再由 ArgoCD 部署到 K8s，本次是最小闭环，原理相同。
