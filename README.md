@@ -28,6 +28,7 @@ K8s + Calico + Harbor + Gitea + Jenkins + ArgoCD + Helm 完整 GitOps 链路。
 - [技术教程](docs/devops/04-技术教程.md)
 - [防问倒手册](docs/devops/05-防问倒手册.md)
 - [质疑点应对](docs/devops/06-质疑点应对.md)
+- [Jenkins 本地 CI 流水线搭建实录](docs/devops/07-Jenkins本地CI流水线搭建实录.md)（服务器释放后在本地 VM 重建 CI 闭环：提交代码 → 自动构建 → 自动部署）
 
 ## 项目二：企业级 Web 应用架构与安全防护（雷池 WAF）
 
