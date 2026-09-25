@@ -1,7 +1,7 @@
-# 运维实战档案（DevOps 交付平台 + WAF 安全防护）
+# 运维实战档案（DevOps 交付平台 + WAF 安全防护 + MySQL 排障实录）
 
-应届运维工程师，两个从零搭建的真实项目：云原生 GitOps 交付链路（K8s + Harbor + Jenkins + ArgoCD）与企业级 WAF 安全防护（雷池 + Nginx 高可用）。
-全部内容来自搭建过程留档：运行截图、踩坑排障实录、架构说明。做到哪说到哪，不夸大不虚构。
+应届运维工程师的真实项目留档：云原生 GitOps 交付链路（K8s + Harbor + Jenkins + ArgoCD）、企业级 WAF 安全防护（雷池 + Nginx 高可用），以及 MySQL 主从复制真实故障排障。
+全部内容来自搭建与排障过程留档：运行截图、踩坑排障实录、架构说明。做到哪说到哪，不夸大不虚构。
 
 ## 项目一：云原生 DevOps 一体化交付平台
 
@@ -37,3 +37,15 @@ K8s + Calico + Harbor + Gitea + Jenkins + ArgoCD + Helm 完整 GitOps 链路。
 阿里云 ECS + 雷池 WAF + Nginx + Docker，含高可用验证与排障记录。
 
 - [实操记录与原理笔记](docs/waf/01-实操记录与原理笔记.md)
+
+## 项目三：MySQL 主从复制 error 1236 排障实录
+
+两台虚拟机真实主从环境（MySQL 8.1.0 主 / 8.0.46 从），断连两年后复制中断。定位根因为 binlog 超过保留期被自动清理（error 1236），确认主从无数据差异后重新对接 binlog 坐标恢复复制，端到端验证通过。
+
+- [排障实录](docs/db/01-MySQL主从复制-error1236排障实录.md)：报错解读、根因取证、修复决策（直接对接 vs 备份重建的分界线）与监控要点
+
+| 截图 | 说明 |
+|------|------|
+| ![故障现场](screenshots/db/03-slave-error-b.png) | 从库 IO 线程中断，error 1236 报错 |
+| ![主库取证](screenshots/db/04-binary-logs-expire.png) | 主库 binlog 列表与 30 天过期时间 |
+| ![恢复验证](screenshots/db/06-slave-select-success.png) | 修复后从库查询到主库新写入的数据 |
