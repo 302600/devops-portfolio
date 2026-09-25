@@ -38,14 +38,20 @@ K8s + Calico + Harbor + Gitea + Jenkins + ArgoCD + Helm 完整 GitOps 链路。
 
 - [实操记录与原理笔记](docs/waf/01-实操记录与原理笔记.md)
 
-## 项目三：MySQL 主从复制 error 1236 排障实录
+## 项目三：MySQL 主从复制排障实录（IO / SQL 两类线程故障）
 
-两台虚拟机真实主从环境（MySQL 8.1.0 主 / 8.0.46 从），断连两年后复制中断。定位根因为 binlog 超过保留期被自动清理（error 1236），确认主从无数据差异后重新对接 binlog 坐标恢复复制，端到端验证通过。
+两台虚拟机真实主从环境（MySQL 8.1.0 主 / 8.0.46 从），覆盖复制中断的两类典型故障：
 
-- [排障实录](docs/db/01-MySQL主从复制-error1236排障实录.md)：报错解读、根因取证、修复决策（直接对接 vs 备份重建的分界线）与监控要点
+- **IO 线程中断（error 1236）**：断连两年后主库 binlog 超过 30 天保留期被自动清理，从库起点文件已不存在；确认主从无数据差异后重新对接 binlog 坐标恢复
+- **SQL 线程中断（error 1062）**：从库被误写入脏数据，主库同主键 binlog 事件重放冲突；删除脏行后从断点重放恢复，主从严格一致
+
+- [01-error 1236 排障实录](docs/db/01-MySQL主从复制-error1236排障实录.md)：报错解读、根因取证、修复决策（直接对接 vs 备份重建的分界线）与监控要点
+- [02-从库误写入排障实录](docs/db/02-MySQL主从复制-从库误写入排障实录.md)：1062 主键冲突的定位、三条修复路径取舍（删脏行重放 / skip counter / pt 工具）与 read_only 预防手段
 
 | 截图 | 说明 |
 |------|------|
 | ![故障现场](screenshots/db/03-slave-error-b.png) | 从库 IO 线程中断，error 1236 报错 |
 | ![主库取证](screenshots/db/04-binary-logs-expire.png) | 主库 binlog 列表与 30 天过期时间 |
 | ![恢复验证](screenshots/db/06-slave-select-success.png) | 修复后从库查询到主库新写入的数据 |
+| ![1062修复](screenshots/db/07-slave-dirty-fix.png) | 从库误写入修复：删脏行后双线程恢复 Yes |
+| ![主从一致](screenshots/db/09-slave-select-consistent.png) | id=2 显示主库写入内容，主从数据一致 |
